@@ -65,40 +65,27 @@ public class Pokemon {
         this.pokemonSkill = new Skill(name, attackPower, energyCost);
     }
 
-    //rests pokemon, checks so currentHP doesn't exceed max HP and that pokemon is not fainted
-    public void rest(){
+
+    public void rest() {
         final int REST = 20;
-        if(this.currentHP + REST > MAX_HP) {
-            this.currentHP = this.MAX_HP;
-        } else if (this.currentHP > 0) {
-            this.currentHP = this.currentHP + REST;
+        if (this.currentHP > 0) {
+            this.currentHP = Math.min(this.currentHP + REST, this.MAX_HP);
         }
     }
 
-    //recovers energy, checks so pokemon is not fainted and that current energy points does not exceed max energy points
     public void recoverEnergy() {
-        if(this.currentHP > 0 && this.currentEP <= 75) {
-            this.currentEP = this.currentEP + 25;
-        } else if (this.currentEP > 75){
-            this.currentEP = 100;
+        final int ENERGY_RECOVERY = 25;
+        if (this.currentHP > 0) {
+            this.currentEP = Math.min(this.currentEP + ENERGY_RECOVERY, 100);
         }
     }
-
 
     public void receiveDamage(Pokemon attackingPokemon, double attackPower, double multiplier) {
-
-        //setting local variables for readability in the if-statements and avoiding calculations in if-statements
-        int targetHP = this.currentHP;
         int energyCost = attackingPokemon.pokemonSkill.getENERGY_COST();
-        attackPower = attackPower * multiplier;
-        int currentEnergyPoints = attackingPokemon.currentEP;
 
-        if(targetHP > attackPower && energyCost <= currentEnergyPoints) {
-            this.currentHP = (int) Math.round(currentHP - attackPower);
-            attackingPokemon.currentEP = currentEnergyPoints - energyCost;
-        } else if(Math.round(targetHP) < attackPower && currentEnergyPoints >= energyCost){
-            this.currentHP = 0;
-            attackingPokemon.currentEP = currentEnergyPoints - energyCost;
+        if (attackingPokemon.currentEP >= energyCost) {
+            this.currentHP = (int) Math.max(Math.round(currentHP - attackPower * multiplier), 0);
+            attackingPokemon.currentEP -= energyCost;
         }
     }
 
