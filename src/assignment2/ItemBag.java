@@ -38,7 +38,7 @@ public class ItemBag {
     }
 
 
-    //method that saves info about item at certain index then removes it and decreases weight appropriately
+
     public Item removeItemAt(int index) {
         if (isIndexOutOfBounds(index)) {
             return null;
@@ -66,13 +66,13 @@ public class ItemBag {
         return heaviestItem;
     }
 
-    //method for increasing weight when adding items
+
     private void addItemIncreaseWeight(int index, Item item) {
         itemList.add(index, item);
         weightOfBag = weightOfBag + item.getWeight();
     }
 
-    //method for removing items and decreasing weight
+
     private void removeAndDecreaseWeight(Item item) {
         itemList.remove(item);
         weightOfBag = weightOfBag - item.getWeight();
@@ -82,17 +82,17 @@ public class ItemBag {
         return ((getNumOfItems() <= index) || (index < 0));
     }
 
-    //checks if weight-limit will be reached adding an item
+
     private boolean enoughWeightSpace(Item item) {
         return (weightOfBag + item.getWeight()) <= MAX_WEIGHT;
     }
 
-    //checks weight of item at specific index
+
     private double peekAtWeight(int index) {
         return itemList.get(index).getWeight();
     }
 
-    //descending order
+
     private int addItemBasedOnWeight(Item item) {
         for (int index = 0; index <= (getNumOfItems()); index++) {
             if (index == getNumOfItems() || item.getWeight() >= peekAtWeight(index)) {

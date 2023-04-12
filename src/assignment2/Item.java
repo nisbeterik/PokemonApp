@@ -1,5 +1,7 @@
 package assignment2;
 
+import util.TwoDecimal;
+
 public class Item {
     private final String ITEM_NAME;
     private final int HEALING_POWER;
@@ -24,7 +26,7 @@ public class Item {
     }
 
     public String toString() {
-        return String.format("%s heals %d HP. (%.2f)", this.ITEM_NAME, this.HEALING_POWER, convertToTwoDecimal(WEIGHT));
+        return String.format("%s heals %d HP. (%.2f)", this.ITEM_NAME, this.HEALING_POWER, TwoDecimal.convert(WEIGHT));
     }
 
 
@@ -47,7 +49,5 @@ public class Item {
         }
     }
 
-    private double convertToTwoDecimal(double value) {
-        return (int) (value*100) / 100.0;
-    }
+
 }
